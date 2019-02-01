@@ -84,7 +84,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_adapters_FileSystem.js.html">fs/lib/adapters/FileSystem.js</a>, <a href="fs_lib_adapters_FileSystem.js.html#line16">line 16</a>
+        <a href="fs_lib_adapters_FileSystem.js.html">fs/lib/adapters/FileSystem.js</a>, <a href="fs_lib_adapters_FileSystem.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -865,7 +865,7 @@
 
     
 
-    <h4 class="name" id="write"><span class="type-signature"></span>write<span class="signature">(resource)</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
+    <h4 class="name" id="write"><span class="type-signature"></span>write<span class="signature">(resource, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
 
     
 
@@ -877,7 +877,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_AbstractReaderWriter.js.html">fs/lib/AbstractReaderWriter.js</a>, <a href="fs_lib_AbstractReaderWriter.js.html#line31">line 31</a>
+        <a href="fs_lib_AbstractReaderWriter.js.html">fs/lib/AbstractReaderWriter.js</a>, <a href="fs_lib_AbstractReaderWriter.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -948,6 +948,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -973,10 +975,167 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">The Resource to write</td>
+            <td class="description last">Resource to write</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>readOnly</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">Whether the resource content shall be written read-only
+						Do not use in conjunction with the <code>drain</code> option.
+						The written file will be used as the new source of this resources content.
+						Therefore the written file should not be altered by any means.
+						Activating this option might improve overall memory consumption.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>drain</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">Whether the resource content shall be emptied during the write process.
+						Do not use in conjunction with the <code>readOnly</code> option.
+						Activating this option might improve overall memory consumption.
+						This should be used in cases where this is the last access to the resource.
+						E.g. the final write of a resource after all processing is finished.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -1040,7 +1199,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 10 2019 11:11:47 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 11:34:54 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

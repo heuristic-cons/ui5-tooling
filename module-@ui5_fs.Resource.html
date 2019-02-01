@@ -243,6 +243,9 @@
             <td class="type">
             
                 
+<span class="param-type">fs.Stats</span>
+|
+
 <span class="param-type">Object</span>
 
 
@@ -263,7 +266,8 @@
 
             
 
-            <td class="description last">File stat information</td>
+            <td class="description last">File information. Instance of
+					<a href="https://nodejs.org/api/fs.html#fs_class_fs_stats">fs.Stats</a> or similar object</td>
         </tr>
 
     
@@ -378,7 +382,7 @@
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="module-@ui5_fs.Resource.html#~createStream">module:@ui5/fs.Resource~createStream</a></span>
 
 
             
@@ -398,8 +402,10 @@
 
             
 
-            <td class="description last">Function callback that returns a readable stream of the content
-					of this resource (cannot be used in conjunction with parameters buffer, string or stream)</td>
+            <td class="description last">Function callback that returns a readable
+					stream of the content of this resource (cannot be used in conjunction with parameters buffer,
+					string or stream).
+					In some cases this is the most memory-efficient way to supply resource content</td>
         </tr>
 
     
@@ -464,7 +470,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line209">line 209</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line261">line 261</a>
     </li></ul></dd>
     
 
@@ -504,7 +510,7 @@
 
 
 <div class="description">
-    Returns a clone of the resource.
+    Returns a clone of the resource. The clones content is independent from that of the original resource
 </div>
 
 
@@ -533,7 +539,7 @@
 
         
 <div class="param-desc">
-    A promise resolving the resource.
+    Promise resolving with the clone
 </div>
 
 
@@ -558,7 +564,7 @@
 
     
 
-    <h4 class="name" id="getBuffer"><span class="type-signature"></span>getBuffer<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
+    <h4 class="name" id="getBuffer"><span class="type-signature">(async) </span>getBuffer<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Buffer>}</span></h4>
 
     
 
@@ -570,7 +576,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line79">line 79</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line90">line 90</a>
     </li></ul></dd>
     
 
@@ -639,7 +645,7 @@
 
         
 <div class="param-desc">
-    A Promise resolving with a buffer of the resource content.
+    Promise resolving with a buffer of the resource content.
 </div>
 
 
@@ -676,7 +682,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line165">line 165</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line216">line 216</a>
     </li></ul></dd>
     
 
@@ -770,7 +776,7 @@
 
     
 
-    <h4 class="name" id="getStatInfo"><span class="type-signature"></span>getStatInfo<span class="signature">()</span><span class="type-signature"> &rarr; {fs.Stats}</span></h4>
+    <h4 class="name" id="getStatInfo"><span class="type-signature"></span>getStatInfo<span class="signature">()</span><span class="type-signature"> &rarr; {fs.Stats|Object}</span></h4>
 
     
 
@@ -782,7 +788,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line186">line 186</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line238">line 238</a>
     </li></ul></dd>
     
 
@@ -851,7 +857,8 @@
 
         
 <div class="param-desc">
-    An object representing an fs.Stats instance
+    Instance of <a href="https://nodejs.org/api/fs.html#fs_class_fs_stats">fs.Stats</a>
+								or similar object
 </div>
 
 
@@ -863,6 +870,9 @@
     <dd>
         
 <span class="param-type">fs.Stats</span>
+|
+
+<span class="param-type">Object</span>
 
 
     </dd>
@@ -888,7 +898,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line132">line 132</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -929,6 +939,11 @@
 
 <div class="description">
     Gets a readable stream for the resource content.
+
+Repetitive calls of this function are only possible if new content has been set in the meantime (through
+<a href="module-@ui5_fs.Resource.html#setStream">setStream</a>, <a href="module-@ui5_fs.Resource.html#setBuffer">setBuffer</a>
+or <a href="module-@ui5_fs.Resource.html#setString">setString</a>). This
+is to prevent consumers from accessing drained streams.
 </div>
 
 
@@ -957,7 +972,7 @@
 
         
 <div class="param-desc">
-    A readable stream for the resource content.
+    Readable stream for the resource content.
 </div>
 
 
@@ -994,7 +1009,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line112">line 112</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line128">line 128</a>
     </li></ul></dd>
     
 
@@ -1063,7 +1078,7 @@
 
         
 <div class="param-desc">
-    A Promise resolving with a string of the resource content.
+    Promise resolving with the resource content.
 </div>
 
 
@@ -1100,7 +1115,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line97">line 97</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -1194,7 +1209,7 @@
 
             
 
-            <td class="description last">A buffer instance</td>
+            <td class="description last">Buffer instance</td>
         </tr>
 
     
@@ -1233,7 +1248,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line175">line 175</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line226">line 226</a>
     </li></ul></dd>
     
 
@@ -1366,7 +1381,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line150">line 150</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -1451,6 +1466,9 @@
             
                 
 <span class="param-type">stream.Readable</span>
+|
+
+<span class="param-type"><a href="module-@ui5_fs.Resource.html#~createStream">module:@ui5/fs.Resource~createStream</a></span>
 
 
             
@@ -1460,7 +1478,8 @@
 
             
 
-            <td class="description last">readable stream</td>
+            <td class="description last">Readable stream of the resource content or
+	 														callback for dynamic creation of a readable stream</td>
         </tr>
 
     
@@ -1499,7 +1518,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line122">line 122</a>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line143">line 143</a>
     </li></ul></dd>
     
 
@@ -1593,7 +1612,7 @@
 
             
 
-            <td class="description last">A string</td>
+            <td class="description last">Resource content</td>
         </tr>
 
     
@@ -1619,6 +1638,116 @@
     
 
     
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    <h4 class="name" id="~createStream"><span class="type-signature"></span>createStream<span class="signature">()</span><span class="type-signature"> &rarr; {stream.Readable}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fs_lib_Resource.js.html">fs/lib/Resource.js</a>, <a href="fs_lib_Resource.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Function for dynamic creation of content streams
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A readable stream of a resources content
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">stream.Readable</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+            
+    
 
     
 </article>
@@ -1635,7 +1764,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 10 2019 11:11:47 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 11:34:54 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
