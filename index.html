@@ -3,9 +3,9 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - UI5 Build and Development Tooling - API Reference</title>
+    <title>Home - UI5 Tooling - API Reference</title>
     
-    <meta name="description" content="UI5 Build and Development Tooling - API Reference" />
+    <meta name="description" content="UI5 Tooling - API Reference" />
     
         <meta name="keywords" content="openui5 sapui5 ui5 build development tool api reference" />
         <meta name="keyword" content="openui5 sapui5 ui5 build development tool api reference" />
@@ -49,7 +49,7 @@
 
     <section class="readme">
         <article><p><img src="./docs/images/UI5_logo_wide.png" alt="UI5 logo"></p>
-<h1><a href="https://ui5.sap.com">UI5</a> Build and Development Tooling</h1><blockquote>
+<h1>UI5 Tooling</h1><blockquote>
 <p>An open and modular toolchain to develop state-of-the-art applications based on the <a href="https://ui5.sap.com">UI5</a> framework.</p>
 </blockquote>
 <p><a href="https://join-ui5-slack.herokuapp.com"><img src="https://img.shields.io/badge/slack-join-44cc11.svg" alt="OpenUI5 Community Slack (#tooling channel)"></a>
@@ -78,9 +78,9 @@
 <h3>Installation</h3><pre class="prettyprint source lang-sh"><code>npm install --global @ui5/cli
 
 # Verify installation
-ui5 --help</code></pre><h2>⚡️ Quick Start: OpenUI5 Sample App</h2><p>Check out the <a href="https://github.com/SAP/openui5-sample-app">OpenUI5 Sample App</a> featuring a full blown <a href="https://github.com/SAP/openui5-sample-app/#openui5-sample-app">How-to</a> to play around with the UI5 Build and Development Tooling.</p>
-<h2>Enable an Existing Project</h2><p>You can easily check whether or not a project (application or library) can already be used with the UI5 Build and Development Tooling by looking for a <code>ui5.yaml</code> file in the project's root directory.<br>This file (with some exceptions) is required for all projects and their dependencies (e.g. reuse libraries) to use them in the UI5 Build and Development Tooling.</p>
-<h3>Setup</h3><p>If your project is not set up for use with the UI5 Build and Development Tooling yet, follow these steps:</p>
+ui5 --help</code></pre><h2>⚡️ Quick Start: OpenUI5 Sample App</h2><p>Check out the <a href="https://github.com/SAP/openui5-sample-app">OpenUI5 Sample App</a> featuring a full blown <a href="https://github.com/SAP/openui5-sample-app/#openui5-sample-app">How-to</a> to play around with the UI5 Tooling.</p>
+<h2>Enable an Existing Project</h2><p>You can easily check whether or not a project (application or library) can already be used with the UI5 Tooling by looking for a <code>ui5.yaml</code> file in the project's root directory.<br>This file (with some exceptions) is required for all projects and their dependencies (e.g. reuse libraries) to use them in the UI5 Tooling.</p>
+<h3>Setup</h3><p>If your project is not set up for use with the UI5 Tooling yet, follow these steps:</p>
 <ol>
 <li><p><strong>If</strong> your project does not have a <code>package.json</code> file yet, let npm generate it:</p>
 <pre class="prettyprint source lang-sh"><code> npm init --yes</code></pre></li>
@@ -93,7 +93,7 @@ ui5 --help</code></pre><h2>⚡️ Quick Start: OpenUI5 Sample App</h2><p>Check o
 </li>
 </ol>
 <p>Questions? Check the <a href="#faq">FAQ</a>!</p>
-<h2>Working With the UI5 Build and Development Tooling</h2><p>When developing a UI5 project locally, you should use the UI5 Server (<code>ui5 serve</code>) and not the UI5 Builder (<code>ui5 build</code>). Building a project should only ever be required when deploying it.</p>
+<h2>Working With the UI5 Tooling</h2><p>When developing a UI5 project locally, you should use the UI5 Server (<code>ui5 serve</code>) and not the UI5 Builder (<code>ui5 build</code>). Building a project should only ever be required when deploying it.</p>
 <p>However, you might have good reasons to also use the UI5 Builder during development. In such cases, feel free to let us know! Maybe your use case could be covered by a future enhancement of the UI5 Server.</p>
 <h2>Project Configuration</h2><p>For details about how to configure a UI5 project (e.g. using a <code>ui5.yaml</code>), see <a href="https://github.com/SAP/ui5-project#configuration">ui5-project - Configuration</a>.</p>
 <h2>Linking Projects</h2><p>Would you like to work on an application project and one or more of its dependencies at the same time? We got you covered!</p>
@@ -125,15 +125,15 @@ my-reuse-library/
      │  ├─ path: /my-reuse-library
      │  └─ dependencies
 [...]</code></pre><h2>OpenUI5 Framework Development</h2><p>See <a href="https://github.com/SAP/openui5/blob/master/docs/developing.md#developing-ui5">SAP/openui5 Developing UI5</a>.</p>
-<h2>HTTP/2 Development Webserver</h2><p>The UI5 Build and Development Tooling contains a web server to serve the project via HTTP/2 protocol.</p>
+<h2>HTTP/2 Development Webserver</h2><p>The UI5 Tooling contains a web server to serve the project via HTTP/2 protocol.</p>
 <pre class="prettyprint source lang-sh"><code>ui5 serve --h2</code></pre><p>This requires an SSL certificate. You are guided through the automatic generation process.</p>
-<h2>Integration in Other Tools</h2><p>One of the key features of the UI5 Build and Development Tooling is its modularization. Single parts of the tooling can easily be integrated in other <code>Node.js</code>-based tools and frameworks like <a href="https://gruntjs.com/">Grunt</a> or <a href="https://gulpjs.com/">Gulp</a>.</p>
+<h2>Integration in Other Tools</h2><p>One of the key features of the UI5 Tooling is its modularization. Single parts of the tooling can easily be integrated in other <code>Node.js</code>-based tools and frameworks like <a href="https://gruntjs.com/">Grunt</a> or <a href="https://gulpjs.com/">Gulp</a>.</p>
 <p>All JavaScript APIs available for direct consumption are listed <a href="https://sap.github.io/ui5-tooling/">here</a>. However, for standard UI5 development, the <a href="https://github.com/SAP/ui5-cli">UI5 CLI</a> should always be the first choice.</p>
 <h2>FAQ</h2><h3>How can I contribute?</h3><p>Please check our <a href="https://github.com/SAP/ui5-tooling/blob/master/CONTRIBUTING.md">Contribution Guidelines</a>.</p>
 <h3>How can I obtain support?</h3><p>Please follow our <a href="https://github.com/SAP/ui5-tooling/blob/master/CONTRIBUTING.md#report-an-issue">Contribution Guidelines</a> on how to report an issue.</p>
 <h3>Why package.json? / Why npm?</h3><p>Currently, the tooling can only resolve dependencies defined in a <code>package.json</code> file. This might change in the future by adding Translators for additional dependency management systems.</p>
 <p>To manage your dependencies, you can use almost any <code>Node.js</code> package manager that relies on <code>package.json</code> files. Popular ones are <a href="https://www.npmjs.com/">npm</a>, <a href="https://yarnpkg.com/">Yarn</a> and <a href="https://pnpm.js.org/">pnpm</a>.</p>
-<p>The UI5 Build and Development Tooling resolves dependencies almost the same way Node.js does when executing a <code>require</code> statement.</p>
+<p>The UI5 Tooling resolves dependencies almost the same way Node.js does when executing a <code>require</code> statement.</p>
 <h3>What's the thing with Yarn?</h3><p>In a couple of guides we refer to the <a href="https://yarnpkg.com/">Yarn</a> node package manager. This is because it offers functionality that the otherwise preferred <a href="https://www.npmjs.com/">npm</a> package manager is currently lacking. Namely, the <a href="https://yarnpkg.com/lang/en/docs/workspaces/">workspace</a> setting which is currently used in the <a href="https://github.com/SAP/openui5">OpenUI5 (mono-)repository</a>. Note that npm <a href="https://github.com/npm/npm/pull/15900#issuecomment-315335381">might add</a> this feature in the future.</p>
 <p>If you do not plan to work with OpenUI5, you may as well use npm or any other node package manger (see <a href="#why-packagejson-why-npm">FAQ: Why package.json? / Why npm?</a>). Keep in mind that linking the same module with npm and Yarn may cause issues. Also, Yarn can't work with links created by npm and vice versa. </p>
 <h3>Where are the npm packages?</h3><p><a href="https://www.npmjs.com/org/openui5">Here</a> (OpenUI5 Libraries) and <a href="https://www.npmjs.com/org/ui5">here</a> (UI5 Tooling).</p>
@@ -154,7 +154,7 @@ my-reuse-library/
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Feb 18 2019 14:01:42 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Feb 19 2019 16:52:59 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
