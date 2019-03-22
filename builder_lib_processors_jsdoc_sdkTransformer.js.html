@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>project/lib/normalizer.js - UI5 Tooling - API Reference</title>
+    <title>builder/lib/processors/jsdoc/sdkTransformer.js - UI5 Tooling - API Reference</title>
     
     <meta name="description" content="UI5 Tooling - API Reference" />
     
@@ -39,7 +39,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">project/lib/normalizer.js</h1>
+    <h1 class="page-title">builder/lib/processors/jsdoc/sdkTransformer.js</h1>
     
 
     
@@ -49,78 +49,45 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const log = require("@ui5/logger").getLogger("normalizer:normalizer");
-const projectPreprocessor = require("./projectPreprocessor");
-
+            <pre class="prettyprint source linenums"><code>const resourceFactory = require("@ui5/fs").resourceFactory;
+const transformer = require("./lib/transform-apijson-for-sdk");
 
 /**
- * Generate project and dependency trees via translators.
- * Optionally configure all projects with the projectPreprocessor.
+ * Transform api.json as created by [jsdocGenerator]{@link module:@ui5/builder.processors.jsdocGenerator}
+ * for usage in a UI5 SDK
  *
  * @public
- * @namespace
- * @alias module:@ui5/project.normalizer
+ * @alias module:@ui5/builder.processors.sdkTransformer
+ * @param {Object} parameters Parameters
+ * @param {string} parameters.apiJsonPath Path to the projects api.json file as created by
+ *				[jsdocGenerator]{@link module:@ui5/builder.processors.jsdoc.jsdocGenerator}
+ * @param {string} parameters.dotLibraryPath Path to the projects .library file
+ * @param {string[]} parameters.dependencyApiJsonPaths List of paths to the api.json files of all dependencies of
+ *				the project as created by [jsdocGenerator]{@link module:@ui5/builder.processors.jsdoc.jsdocGenerator}
+ * @param {string} parameters.targetApiJsonPath Path to create the new, transformed api.json resource for
+ * @param {fs|module:@ui5/fs.fsInterface} parameters.fs Node fs or
+ * 				custom [fs interface]{@link module:resources/module:@ui5/fs.fsInterface} to use
+ *
+ * @returns {Promise&lt;module:@ui5/fs.Resource[]>} Promise resolving with created resources
  */
-const Normalizer = {
-	/**
-	 * Generates a project and dependency tree via translators and configures all projects via the projectPreprocessor
-	 *
-	 * @public
-	 * @param {Object} [options]
-	 * @param {string} [options.cwd] Current working directory
-	 * @param {string} [options.configPath] Path to configuration file
-	 * @param {string} [options.translatorName] Translator to use
-	 * @param {Object} [options.translatorOptions] Options to pass to translator
-	 * @returns {Promise&lt;Object>} Promise resolving to tree object
-	 */
-	generateProjectTree: async function(options = {}) {
-		const tree = await Normalizer.generateDependencyTree(options);
-
-		if (options.configPath) {
-			tree.configPath = options.configPath;
-		}
-		return projectPreprocessor.processTree(tree);
-	},
-
-	/**
-	 * Generates a project and dependency tree via translators
-	 *
-	 * @public
-	 * @param {Object} [options]
-	 * @param {string} [options.cwd=.] Current working directory
-	 * @param {string} [options.translatorName=npm] Translator to use
-	 * @param {Object} [options.translatorOptions] Options to pass to translator
-	 * @returns {Promise&lt;Object>} Promise resolving to tree object
-	 */
-	generateDependencyTree: async function({cwd = ".", translatorName="npm", translatorOptions={}} = {}) {
-		log.verbose("Building dependency tree...");
-
-		let translatorParams = [];
-		let translator = translatorName;
-		if (translatorName.indexOf(":") !== -1) {
-			translatorParams = translatorName.split(":");
-			translator = translatorParams[0];
-			translatorParams = translatorParams.slice(1);
-		}
-
-		let translatorModule;
-		switch (translator) {
-		case "static":
-			translatorModule = require("./translators/static");
-			break;
-		case "npm":
-			translatorModule = require("./translators/npm");
-			break;
-		default:
-			return Promise.reject(new Error(`Unknown translator ${translator}`));
-		}
-
-		translatorOptions.parameters = translatorParams;
-		return translatorModule.generateDependencyTree(cwd, translatorOptions);
+const sdkTransformer = async function({
+	apiJsonPath, dotLibraryPath, dependencyApiJsonPaths, targetApiJsonPath, fs} = {}
+) {
+	if (!apiJsonPath || !dotLibraryPath || !targetApiJsonPath || !dependencyApiJsonPaths || !fs) {
+		throw new Error("[sdkTransformer]: One or more mandatory parameters not provided");
 	}
+	const fakeTargetPath = "/ignore/this/path/resource/will/be/returned";
+	const apiJsonContent = await transformer(apiJsonPath, fakeTargetPath, dotLibraryPath, dependencyApiJsonPaths, {
+		fs,
+		returnOutputFiles: true
+	});
+	return [resourceFactory.createResource({
+		path: targetApiJsonPath,
+		string: apiJsonContent
+	})];
 };
 
-module.exports = Normalizer;
+module.exports = sdkTransformer;
 </code></pre>
         </article>
     </section>

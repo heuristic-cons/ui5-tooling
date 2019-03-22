@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>project/lib/normalizer.js - UI5 Tooling - API Reference</title>
+    <title>builder/lib/processors/jsdoc/apiIndexGenerator.js - UI5 Tooling - API Reference</title>
     
     <meta name="description" content="UI5 Tooling - API Reference" />
     
@@ -39,7 +39,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">project/lib/normalizer.js</h1>
+    <h1 class="page-title">builder/lib/processors/jsdoc/apiIndexGenerator.js</h1>
     
 
     
@@ -49,78 +49,57 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const log = require("@ui5/logger").getLogger("normalizer:normalizer");
-const projectPreprocessor = require("./projectPreprocessor");
-
+            <pre class="prettyprint source linenums"><code>const resourceFactory = require("@ui5/fs").resourceFactory;
+const createIndex = require("./lib/create-api-index");
 
 /**
- * Generate project and dependency trees via translators.
- * Optionally configure all projects with the projectPreprocessor.
+ * Compiles API index resources from all &lt;code>api.json&lt;/code> resources available in the given test resources directory
+ * as created by the [sdkTransformer]{@link module:@ui5/builder.processors.sdkTransformer} processor.
+ * The resulting index resources (e.g. &lt;code>api-index.json&lt;/code>,  &lt;code>api-index-deprecated.json&lt;/code>,
+ * &lt;code>api-index-experimental.json&lt;/code> and &lt;code>api-index-since.json&lt;/code>) are mainly to be used in the SDK.
  *
  * @public
- * @namespace
- * @alias module:@ui5/project.normalizer
+ * @alias module:@ui5/builder.processors.apiIndexGenerator
+ * @param {Object} parameters Parameters
+ * @param {string} parameters.versionInfoPath Path to &lt;code>sap-ui-version.json&lt;/code> resource
+ * @param {string} parameters.testResourcesRootPath Path to &lt;code>/test-resources&lt;/code> root directory in the
+ *														given fs
+ * @param {string} parameters.targetApiIndexPath Path to create the generated API index JSON resource for
+ * @param {string} parameters.targetApiIndexDeprecatedPath Path to create the generated API index "deprecated" JSON
+ *															resource for
+ * @param {string} parameters.targetApiIndexExperimentalPath Path to create the generated API index "experimental" JSON
+ *																resource for
+ * @param {string} parameters.targetApiIndexSincePath Path to create the generated API index "since" JSON resource for
+ * @param {fs|module:@ui5/fs.fsInterface} parameters.fs Node fs or
+ * 				custom [fs interface]{@link module:resources/module:@ui5/fs.fsInterface} to use
+ * @returns {Promise&lt;module:@ui5/fs.Resource[]>} Promise resolving with created resources &lt;code>api-index.json&lt;/code>,
+ * &lt;code>api-index-deprecated.json&lt;/code>, &lt;code>api-index-experimental.json&lt;/code> and
+ * &lt;code>api-index-since.json&lt;/code> (names depend on the supplied paths)
  */
-const Normalizer = {
-	/**
-	 * Generates a project and dependency tree via translators and configures all projects via the projectPreprocessor
-	 *
-	 * @public
-	 * @param {Object} [options]
-	 * @param {string} [options.cwd] Current working directory
-	 * @param {string} [options.configPath] Path to configuration file
-	 * @param {string} [options.translatorName] Translator to use
-	 * @param {Object} [options.translatorOptions] Options to pass to translator
-	 * @returns {Promise&lt;Object>} Promise resolving to tree object
-	 */
-	generateProjectTree: async function(options = {}) {
-		const tree = await Normalizer.generateDependencyTree(options);
-
-		if (options.configPath) {
-			tree.configPath = options.configPath;
-		}
-		return projectPreprocessor.processTree(tree);
-	},
-
-	/**
-	 * Generates a project and dependency tree via translators
-	 *
-	 * @public
-	 * @param {Object} [options]
-	 * @param {string} [options.cwd=.] Current working directory
-	 * @param {string} [options.translatorName=npm] Translator to use
-	 * @param {Object} [options.translatorOptions] Options to pass to translator
-	 * @returns {Promise&lt;Object>} Promise resolving to tree object
-	 */
-	generateDependencyTree: async function({cwd = ".", translatorName="npm", translatorOptions={}} = {}) {
-		log.verbose("Building dependency tree...");
-
-		let translatorParams = [];
-		let translator = translatorName;
-		if (translatorName.indexOf(":") !== -1) {
-			translatorParams = translatorName.split(":");
-			translator = translatorParams[0];
-			translatorParams = translatorParams.slice(1);
-		}
-
-		let translatorModule;
-		switch (translator) {
-		case "static":
-			translatorModule = require("./translators/static");
-			break;
-		case "npm":
-			translatorModule = require("./translators/npm");
-			break;
-		default:
-			return Promise.reject(new Error(`Unknown translator ${translator}`));
-		}
-
-		translatorOptions.parameters = translatorParams;
-		return translatorModule.generateDependencyTree(cwd, translatorOptions);
+const apiIndexGenerator = async function({
+	versionInfoPath, testResourcesRootPath, targetApiIndexPath, targetApiIndexDeprecatedPath,
+	targetApiIndexExperimentalPath, targetApiIndexSincePath, fs
+} = {}) {
+	if (!versionInfoPath || !testResourcesRootPath || !targetApiIndexPath || !targetApiIndexDeprecatedPath ||
+			!targetApiIndexExperimentalPath || !targetApiIndexSincePath || !fs) {
+		throw new Error("[apiIndexGenerator]: One or more mandatory parameters not provided");
 	}
+
+	const resourceMap = await createIndex(versionInfoPath, testResourcesRootPath, targetApiIndexPath,
+		targetApiIndexDeprecatedPath, targetApiIndexExperimentalPath, targetApiIndexSincePath, {
+			fs,
+			returnOutputFiles: true
+		});
+
+	return Object.keys(resourceMap).map((resPath) => {
+		return resourceFactory.createResource({
+			path: resPath,
+			string: resourceMap[resPath]
+		});
+	});
 };
 
-module.exports = Normalizer;
+module.exports = apiIndexGenerator;
 </code></pre>
         </article>
     </section>
